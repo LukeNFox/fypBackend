@@ -21,7 +21,7 @@ apply plugin: 'io.spring.dependency-management'
 group = 'lukefox'
 
 bootJar {
-    baseName = 'gs-rest-service'
+    baseName = 'dive-rest-service'
     version =  '0.1.0'
 }
 
