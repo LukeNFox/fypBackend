@@ -6,5 +6,5 @@ services:
 
 after_success:
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
-  - docker build --build-args DEPENDENCY=build/dependency -t fyp-backend/dive-rest-service ./diveService
+  - docker build -t fyp-backend/dive-rest-service ./diveService
   - docker push fyp-backend/dive-rest-service
