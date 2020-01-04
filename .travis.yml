@@ -6,5 +6,5 @@ services:
 
 after_success:
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
-  - docker build -t fyp-backend/dive-rest-service ./diveService
-  - docker push fyp-backend/dive-rest-service
+  - docker build -t lukefox/dive-rest-service ./diveService
+  - docker push lukefox/dive-rest-service
