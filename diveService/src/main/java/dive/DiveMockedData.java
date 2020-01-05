@@ -7,9 +7,12 @@ public class DiveMockedData {
 
     private List<Dive> dives;
 
-    private static DiveMockedData ourInstance = new DiveMockedData();
+    private static DiveMockedData ourInstance = null;
 
     public static DiveMockedData getInstance() {
+        if(ourInstance == null){
+            ourInstance = new DiveMockedData();
+        }
         return ourInstance;
     }
 
