@@ -11,4 +11,5 @@ rootProject.name = 'fypBackend'
 
 include 'diveService'
 include 'eureka-service'
+include 'zuul-gateway-service'
 
