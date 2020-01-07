@@ -10,3 +10,5 @@
 rootProject.name = 'fypBackend'
 
 include 'diveService'
+include 'eureka-service'
+
