@@ -15,12 +15,12 @@ after_success:
 
   - docker build -t lukefox/dive-rest-service ./diveService
   - docker tag lukefox/dive-rest-service lukefox/dive-rest-service:$TAG
-  - docker push lukefox/dive-rest-service
+  - docker push lukefox/dive-rest-service:$TAG
 
   - docker build -t lukefox/registry ./eureka-service
   - docker tag lukefox/registry lukefox/registry:$TAG
-  - docker push lukefox/registry
+  - docker push lukefox/registry:$TAG
 
   - docker build -t lukefox/gateway-service ./zuul-gateway-service
   - docker tag lukefox/gateway-service lukefox/gateway-service:$TAG
-  - docker push lukefox/gateway-service
+  - docker push lukefox/gateway-service:$TAG
