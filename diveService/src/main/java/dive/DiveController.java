@@ -17,26 +17,26 @@ public class DiveController {
     @Autowired
     DiverRepository diverRepository;
 
-    @GetMapping("/dives")
+    @GetMapping("/dives/all")
     public List<Dive> getAllDives(){
         return diveRepository.findAll();
     }
 
-    @GetMapping("/divers")
+    @GetMapping("/divers/all")
     public List<Diver> getAllDivers(){
         return diverRepository.findAll();
     }
 
     @GetMapping("/dives")
-    public Optional<Dive> getDive(@RequestParam(value="diveId") String id) {
+    public Dive getDive(@RequestParam(value="diveId") String id) {
         int diveId = Integer.parseInt(id);
-        return diveRepository.findById(diveId);
+        return diveRepository.findById(diveId).get();
     }
 
     @GetMapping("/divers")
     public List<Diver> getDivers(@RequestParam(value="diveId")  String id) {
         int diveId = Integer.parseInt(id);
-        return diverRepository.findByDiveid_DiveId(diveId);
+        return diverRepository.findByDiveId_DiveId(diveId);
     }
 
     @PostMapping("/dives")
@@ -61,24 +61,21 @@ public class DiveController {
 
     @PostMapping("/divers")
     public Diver createDiver(@RequestBody Map<String, String> body) {
+        String diveId = body.get("diveId");
         String name   = body.get("name");
-        String phone  = body.get("phone");
+        String phone  = body.get("phoneNumber");
         String gasBlend        = body.get("gasBlend");
         String exposureSuit    = body.get("exposureSuit");
-        String breathingApparatus  = body.get("breathingAppartus");
+        String breathingApparatus  = body.get("breathingApparatus");
         String qualifications    = body.get("qualifications");
         String medicalHistory    = body.get("medicalHistory");
 
-        return diverRepository.save(new Diver(name, phone, gasBlend, exposureSuit, breathingApparatus, qualifications, medicalHistory));
+        Diver diver = new Diver(name, phone, gasBlend, exposureSuit, breathingApparatus, qualifications, medicalHistory);
+
+        int diveIdInt = Integer.parseInt(diveId);
+        Dive dive = diveRepository.findById(diveIdInt).get();
+        diver.setDiveId(dive);
+
+        return diverRepository.save(diver);
     }
-
-
-
-
-
-
-
-
-
-
 }

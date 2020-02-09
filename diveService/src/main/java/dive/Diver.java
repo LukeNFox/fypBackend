@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Diver {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="diverid")
     private int diverId;
 
@@ -28,7 +28,7 @@ public class Diver {
 
     @ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
     @JoinColumn(name="diveid")
-    private Dive diveid;
+    private Dive diveId;
 
     public Diver(){ }
 
@@ -42,8 +42,20 @@ public class Diver {
         this.medicalHistory = medicalHistory;
     }
 
-    public int getDiverid() {
+    public int getDiverId() {
         return diverId;
+    }
+
+    public void setDiverId(int diverId) {
+        this.diverId = diverId;
+    }
+
+    public Dive getDiveId() {
+        return diveId;
+    }
+
+    public void setDiveId(Dive diveId) {
+        this.diveId = diveId;
     }
 
     public String getName() {
@@ -82,9 +94,7 @@ public class Diver {
         return breathingApparatus;
     }
 
-    public void breathingApparatus(String breathingApparatus) {
-        this.breathingApparatus = breathingApparatus;
-    }
+    public void setBreathingApparatus(String breathingApparatus) { this.breathingApparatus = breathingApparatus; }
 
     public String getQualifications() {
         return qualifications;

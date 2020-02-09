@@ -7,5 +7,5 @@ import java.util.List;
 
 @Repository
 public interface DiverRepository extends JpaRepository<Diver, Integer> {
-    List<Diver> findByDiveid_DiveId(Integer diveId);
+    List<Diver> findByDiveId_DiveId(Integer diveId);
 }
