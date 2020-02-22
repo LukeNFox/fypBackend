@@ -24,3 +24,7 @@ after_success:
   - docker build -t lukefox/gateway-service ./zuul-gateway-service
   - docker tag lukefox/gateway-service lukefox/gateway-service:$TAG
   - docker push lukefox/gateway-service:$TAG
+
+  - docker build -t lukefox/sms-service ./sms-service
+  - docker tag lukefox/sms-service lukefox/sms-service:$TAG
+  - docker push lukefox/sms-service:$TAG
