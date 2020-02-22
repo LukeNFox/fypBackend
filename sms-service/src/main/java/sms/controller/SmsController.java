@@ -1,11 +1,16 @@
 package sms.controller;
 
+import org.quartz.Job;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import sms.controller.dto.ScheduleRequest;
+import sms.controller.dto.ScheduleResponse;
 import sms.persistence.Recipient;
 import sms.persistence.RecipientsRepository;
 import sms.persistence.Sms;
 import sms.persistence.SmsRepository;
+import sms.service.SchedulerService;
 import sms.service.SmsService;
 
 import java.time.LocalTime;
@@ -18,6 +23,9 @@ public class SmsController {
 
     @Autowired
     SmsService smsService;
+
+    @Autowired
+    SchedulerService schedulerService;
 
     @Autowired
     SmsRepository smsRepository;
@@ -55,7 +63,7 @@ public class SmsController {
     }
 
     @PostMapping("/sms")
-    public Recipient createSms(@RequestBody Map<String, String> body) {
+    public Recipient createSms(@RequestBody Map<String, String> body) throws Exception{
         String name   = body.get("name");
         String phone  = body.get("phone");
         String deliveryTimeString = body.get("deliverytime");
@@ -77,6 +85,17 @@ public class SmsController {
 
         return recipient;
 
+    }
+
+    @SuppressWarnings("unchecked")
+    @RequestMapping(value = "/schedule", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ScheduleResponse schedule(@RequestBody ScheduleRequest details) throws Exception {
+
+        Class<?> jobClass = Class.forName(details.getJobClass());
+        schedulerService.scheduleJob((Class<? extends Job>) jobClass, details.getJobName(), details.getJobGroup(),
+                details.getCronExpression());
+        return new ScheduleResponse("Successfully scheduled " + details.getJobName());
     }
 
 }

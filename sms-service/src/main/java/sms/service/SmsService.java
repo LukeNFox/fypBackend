@@ -32,4 +32,8 @@ public class SmsService {
             LOGGER.info("Error sending the sms Message"+e);
         }
     }
+
+    public String sayHello(String name) {
+        return "Hello " + name + "!";
+    }
 }
