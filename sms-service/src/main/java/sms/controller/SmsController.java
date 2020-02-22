@@ -17,7 +17,7 @@ import java.util.Map;
 public class SmsController {
 
     @Autowired
-    SmsService service;
+    SmsService smsService;
 
     @Autowired
     SmsRepository smsRepository;
@@ -71,7 +71,12 @@ public class SmsController {
 
         recipient.setSmsId(sms);
 
-        return recipientsRepository.save(recipient);
+        recipientsRepository.save(recipient);
+
+        smsService.sendMessage(phone, message, name);
+
+        return recipient;
+
     }
 
 }
