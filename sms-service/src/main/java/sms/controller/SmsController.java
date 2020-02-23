@@ -1,38 +1,32 @@
 package sms.controller;
 
-import org.quartz.Job;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import sms.controller.dto.ScheduleRequest;
-import sms.controller.dto.ScheduleResponse;
 import sms.persistence.Recipient;
 import sms.persistence.RecipientsRepository;
 import sms.persistence.Sms;
 import sms.persistence.SmsRepository;
-import sms.service.SchedulerService;
+//import sms.service.SchedulerService;
 import sms.service.SmsService;
 
-import java.time.LocalTime;
+import java.time.*;
 import java.util.List;
 import java.util.Map;
-
 
 @RestController
 public class SmsController {
 
     @Autowired
     SmsService smsService;
-
-    @Autowired
-    SchedulerService schedulerService;
+//
+//    @Autowired
+//    SchedulerService schedulerService;
 
     @Autowired
     SmsRepository smsRepository;
 
     @Autowired
     RecipientsRepository recipientsRepository;
-
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @ResponseBody
@@ -58,8 +52,8 @@ public class SmsController {
 
     @GetMapping("/recipients")
     public List<Recipient> getRecipients(@RequestParam(value="smsId")  String id) {
-        int diveId = Integer.parseInt(id);
-        return recipientsRepository.findBySmsId_SmsId(diveId);
+        int smsId = Integer.parseInt(id);
+        return recipientsRepository.findBySmsId_SmsId(smsId);
     }
 
     @PostMapping("/sms")
@@ -81,21 +75,30 @@ public class SmsController {
 
         recipientsRepository.save(recipient);
 
-        smsService.sendMessage(phone, message, name);
+        smsService.schedule(sms.getSmsId(),phone, message, name, deliveryTime);
 
         return recipient;
 
     }
 
-    @SuppressWarnings("unchecked")
-    @RequestMapping(value = "/schedule", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public ScheduleResponse schedule(@RequestBody ScheduleRequest details) throws Exception {
-
-        Class<?> jobClass = Class.forName(details.getJobClass());
-        schedulerService.scheduleJob((Class<? extends Job>) jobClass, details.getJobName(), details.getJobGroup(),
-                details.getCronExpression());
-        return new ScheduleResponse("Successfully scheduled " + details.getJobName());
+    @DeleteMapping("/sms")
+    public void cancelSms(@RequestParam(value="smsId") String id) throws Exception{
+        int smsId = Integer.parseInt(id);
+        smsService.cancel(smsId);
     }
 
+    @PostMapping("/sms/now")
+    public void sendSmsImmediate(@RequestParam(value="smsId")  String id) throws Exception{
+        int smsId = Integer.parseInt(id);
+
+        List<Recipient> recipients = recipientsRepository.findBySmsId_SmsId(smsId);
+
+        Sms sms = smsRepository.findById(smsId).get();
+
+        for(Recipient recipient: recipients) {
+
+            smsService.sendMessage(recipient.getPhone(), sms.getMessage(), recipient.getName());
+
+        }
+    }
 }

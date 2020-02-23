@@ -7,5 +7,5 @@ import java.util.List;
 
 @Repository
 public interface RecipientsRepository extends JpaRepository<Recipient, Integer> {
-    List<Recipient> findBySmsId_SmsId(Integer diveId);
+    List<Recipient> findBySmsId_SmsId(Integer smsId);
 }
