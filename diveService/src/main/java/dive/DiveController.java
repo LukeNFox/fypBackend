@@ -57,11 +57,11 @@ public class DiveController {
         String exitTime= body.get("exitTime");
         String diveDifficulty= body.get("diveDifficulty");
         String parking= body.get("parking");
-        String hyperbaricLocation= body.get("hyperbaricLocation");
+        String hyperbaricLocation= body.get("nearestHyperbaricChamber");
         String hemsLocation= body.get("hemsLocation");
-        String emsPhone= body.get("emsPhone");
-        String coastguardPhone= body.get("coastguardPhone");
-        String DANnumber= body.get("DANnumber");
+        String emsPhone= body.get("emsPhoneNumber");
+        String coastguardPhone= body.get("coastguardPhoneNumber");
+        String DANnumber= body.get("DANPhoneNumber");
 
         return diveRepository.save(new Dive(location,diveSite,longitude,latitude,DANnumber,maxDepth, totalBottomTime, visibility, environment, seaConditions, current, entryTime, exitTime, diveDifficulty, parking, hyperbaricLocation, hemsLocation, emsPhone, coastguardPhone));
     }
