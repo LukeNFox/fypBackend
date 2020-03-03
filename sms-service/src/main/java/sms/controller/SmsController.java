@@ -98,7 +98,7 @@ public class SmsController {
         for(Recipient recipient: recipients) {
 
             smsService.sendMessage(recipient.getPhone(), sms.getMessage(), recipient.getName());
-
         }
+        smsService.cancel(smsId);
     }
 }

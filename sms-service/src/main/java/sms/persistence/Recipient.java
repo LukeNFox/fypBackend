@@ -19,7 +19,7 @@ public class Recipient {
 
     @ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
     @JoinColumn(name="smsid")
-    private Sms smsId;
+    private Sms sms;
 
 
     public Recipient(){ }
@@ -55,10 +55,10 @@ public class Recipient {
     }
 
     public Sms getSmsId() {
-        return smsId;
+        return sms;
     }
 
-    public void setSmsId(Sms smsId) {
-        this.smsId = smsId;
+    public void setSmsId(Sms sms) {
+        this.sms = sms;
     }
 }

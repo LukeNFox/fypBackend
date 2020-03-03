@@ -41,6 +41,12 @@ public class DiveController {
 
     @PostMapping("/dives")
     public Dive createDive(@RequestBody Map<String, String> body) {
+
+        String latitude = body.get("latitude");
+        String longitude = body.get("longitude");
+        String diveSite = body.get("diveSite");
+        String location = body.get("location");
+
         String maxDepth = body.get("maxDepth");
         String totalBottomTime = body.get("totalBottomTime");
         String visibility= body.get("visibility");
@@ -55,8 +61,9 @@ public class DiveController {
         String hemsLocation= body.get("hemsLocation");
         String emsPhone= body.get("emsPhone");
         String coastguardPhone= body.get("coastguardPhone");
+        String DANnumber= body.get("DANnumber");
 
-        return diveRepository.save(new Dive(maxDepth, totalBottomTime, visibility, environment, seaConditions, current, entryTime, exitTime, diveDifficulty, parking, hyperbaricLocation, hemsLocation, emsPhone, coastguardPhone));
+        return diveRepository.save(new Dive(location,diveSite,longitude,latitude,DANnumber,maxDepth, totalBottomTime, visibility, environment, seaConditions, current, entryTime, exitTime, diveDifficulty, parking, hyperbaricLocation, hemsLocation, emsPhone, coastguardPhone));
     }
 
     @PostMapping("/divers")

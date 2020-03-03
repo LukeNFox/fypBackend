@@ -41,9 +41,20 @@ public class Dive {
     @Column(name="coastguardphone")
     private String coastguardPhone;
 
+    @Column(name="location")
+    private String location;
+    @Column(name="divesite")
+    private String diveSite;
+    @Column(name="longitude")
+    private String longitude;
+    @Column(name="latitude")
+    private String latitude;
+    @Column(name="dannumber")
+    private String DANnumber;
+
     public Dive (){this.diveId = hashCode();}
 
-    public Dive(String maxDepth, String totalBottomTime, String visibility, String environment, String seaConditions, String current, String entryTime, String exitTime, String diveDifficulty, String parking, String hyperbaricLocation, String hemsLocation, String emsPhone, String coastguardPhone) {
+    public Dive(String location,String diveSite,String longitude,String latitude,String DANnumber,String maxDepth, String totalBottomTime, String visibility, String environment, String seaConditions, String current, String entryTime, String exitTime, String diveDifficulty, String parking, String hyperbaricLocation, String hemsLocation, String emsPhone, String coastguardPhone) {
         this.maxDepth = maxDepth;
         this.totalBottomTime = totalBottomTime;
         this.visibility = visibility;
@@ -59,6 +70,11 @@ public class Dive {
         this.emsPhone = emsPhone;
         this.coastguardPhone = coastguardPhone;
         this.diveId = hashCode();
+        this.location = location;
+        this.diveSite = diveSite;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.DANnumber = DANnumber;
     }
 
     public int hashCode() {
@@ -72,6 +88,46 @@ public class Dive {
         String formattedDate= dateFormat.format(date);
         return formattedDate;
         }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getDiveSite() {
+        return diveSite;
+    }
+
+    public void setDiveSite(String diveSite) {
+        this.diveSite = diveSite;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getDANnumber() {
+        return DANnumber;
+    }
+
+    public void setDANnumber(String DANnumber) {
+        this.DANnumber = DANnumber;
+    }
 
     public int getId() {
         return diveId;
