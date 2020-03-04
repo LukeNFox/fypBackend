@@ -1,10 +1,21 @@
 package dive;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -58,7 +69,7 @@ public class DiveController {
         String diveDifficulty= body.get("diveDifficulty");
         String parking= body.get("parking");
         String hyperbaricLocation= body.get("nearestHyperbaricChamber");
-        String hemsLocation= body.get("hemsLocation");
+        String hemsLocation= body.get("nearestHemsUnit");
         String emsPhone= body.get("emsPhoneNumber");
         String coastguardPhone= body.get("coastguardPhoneNumber");
         String DANnumber= body.get("DANPhoneNumber");
@@ -84,5 +95,30 @@ public class DiveController {
         diver.setDiveId(dive);
 
         return diverRepository.save(diver);
+    }
+
+    @RequestMapping(value = "/android/download", method = RequestMethod.GET, produces="application/apk")
+    public ResponseEntity<InputStreamResource> download() throws IOException {
+
+        File file = new File("/usr/appstore/scubaSOS.apk");
+        if (!file.exists()) {
+            file = new File("D:/scubaSOS.apk");
+            if(!file.exists()) {
+                throw new FileNotFoundException("Oops! File not found");
+            }
+        }
+
+        InputStreamResource isResource = new InputStreamResource(new FileInputStream(file));
+        FileSystemResource fileSystemResource = new FileSystemResource(file);
+        String fileName = FilenameUtils.getName(file.getAbsolutePath());
+        fileName=new String(fileName.getBytes("UTF-8"),"iso-8859-1");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+        headers.setContentLength(fileSystemResource.contentLength());
+        headers.setContentDispositionFormData("attachment", fileName);
+        return new ResponseEntity<InputStreamResource>(isResource, headers, HttpStatus.OK);
     }
 }
