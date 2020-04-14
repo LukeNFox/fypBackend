@@ -95,8 +95,4 @@ public class SmsService {
         scheduler.deleteJob(key);
 
     }
-
-    public String sayHello(String name) {
-        return "Hello " + name + "!";
-    }
 }
