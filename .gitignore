@@ -17,3 +17,5 @@ README.html
 .idea
 /lib
 */out/
+.python-version
+__pycache__/

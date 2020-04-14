@@ -41,7 +41,11 @@ public class SmsService {
     }
 
     public void sendMessage(String to, String message, String name) {
-        String textMessage = "Hi " + name + ". This is a message from scuba Sos! " + message;
+        String textMessage = "Hi " + name +
+                ". This is a message from scuba Sos. This text has been sent to you" +
+                " because a diver is in danger and you have been selected as an emergency contact." +
+                " Please attempt to contact the divers immediately! If unsuccessful contact the emergency services." +
+                message;
 
         try {
             Message.creator(new PhoneNumber(to), new PhoneNumber(phoneNumber), textMessage).create();
