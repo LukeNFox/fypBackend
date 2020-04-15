@@ -44,7 +44,7 @@ public class SmsService {
         String textMessage = "Hi " + name +
                 ". This is a message from scuba Sos. This text has been sent to you" +
                 " because a diver is in danger and you have been selected as an emergency contact." +
-                " Please attempt to contact the divers immediately! If unsuccessful contact the emergency services." +
+                " Please attempt to contact the diver immediately! If unsuccessful contact the emergency services." +
                 message;
 
         try {
@@ -71,7 +71,7 @@ public class SmsService {
         LocalDate date = LocalDate.now();
 
         Instant instant = deliveryTime.atDate(LocalDate.of(date.getYear(), date.getMonth(), date.getDayOfMonth())).
-                atZone(ZoneId.systemDefault()).toInstant();
+                atZone(ZoneId.of("Europe/Dublin")).toInstant();
         Date newTime = Date.from(instant);
 
 
