@@ -71,7 +71,7 @@ public class SmsService {
         LocalDate date = LocalDate.now();
 
         Instant instant = deliveryTime.atDate(LocalDate.of(date.getYear(), date.getMonth(), date.getDayOfMonth())).
-                atZone(ZoneId.systemDefault()).toInstant();
+                atZone(ZoneId.of("Europe/Dublin")).toInstant();
         Date newTime = Date.from(instant);
 
 

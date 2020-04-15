@@ -65,7 +65,12 @@ public class SmsController {
 
         LocalTime deliveryTime = LocalTime.parse(deliveryTimeString);
 
-        Sms sms = new Sms(message,deliveryTime);
+        LocalTime utcTime = LocalDateTime.of(LocalDate.now(), deliveryTime)
+                .atZone(ZoneId.of("Europe/Dublin"))
+                .withZoneSameInstant(ZoneOffset.UTC)
+                .toLocalTime();
+
+        Sms sms = new Sms(message,utcTime);
 
         smsRepository.save(sms);
 
@@ -75,7 +80,7 @@ public class SmsController {
 
         recipientsRepository.save(recipient);
 
-        smsService.schedule(sms.getSmsId(),phone, message, name, deliveryTime);
+        smsService.schedule(sms.getSmsId(),phone, message, name, utcTime);
 
         return recipient;
 
